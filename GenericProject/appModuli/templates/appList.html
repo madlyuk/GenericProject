@@ -1,0 +1,28 @@
+{% extends 'event_base.html' %}
+
+{% block head_title %}{{ block.super }} | Lista Eventi {% endblock head_title %}
+{% block content %}
+
+<div class="card-deck-wrapper">
+    <div class="card-deck  text-center">
+        <div class="card-columns">
+
+        {% for app in appList %}
+          <div class="card mb-2" style="height: 30rem;">
+            <img src="{{ app.image }}" class="card-img-top" alt="libertà">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">{{ app.title }}</h5>
+              <p class="card-text">{{ app.desc }}</p>
+            </div>
+            <div class="card-footer bg-transparent border-success border-top-0">
+                <a href="#" class="align-self-end btn btn-outline-info btn-sm" style="margin-top: auto;" role="button">scopri</a>
+            </div>
+          </div>
+          {% empty %}
+          <li>..Nessun App trovata..</li>
+          {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

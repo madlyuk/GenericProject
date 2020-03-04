@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content%}
+
+<div class="row">
+    <div class="col-12 text-center">
+        <p class="h1 display-3">Catalogo Libri</p>
+        <hr>
+    </div>
+    <div class="col-2">
+        <div class="btn-group-vertical">
+            <a href="{% url 'catalogo_libri' %}" class="{% if request.resolver_match.url_name == 'catalogo_libri' %}btn btn-primary btn-lg active{% else %} btn btn-secondary btn-lg  {% endif %}" role="button" aria-pressed="true">Libri</a>
+            <a href="{% url 'lista_autori' %}" class="{% if request.resolver_match.url_name == 'lista_autori' %}btn btn-primary btn-lg active{% else %} btn btn-secondary btn-lg  {% endif %}" role="button" aria-pressed="true">Autori</a>
+            <a href="{% url 'lista_generi' %}" class="{% if request.resolver_match.url_name == 'lista_generi' %}btn btn-primary btn-lg active{% else %} btn btn-secondary btn-lg  {% endif %}" role="button" aria-pressed="true">Generi</a>
+        </div>
+    </div>
+    <div class="col-10">
+        <div class="card-deck">
+            {% for l in libri %}
+            <div class="card">
+              <div class="card-header">ISBN: {{ l.isbn }}</div>
+              <div class="card-body">
+                <h5 class="card-title">{{ l }}</h5>
+                <p class="card-text">
+                        Autore: {{ l.autore }}<br>
+                        Genere:
+                      {% for g in l.genere.all %}
+                      <a href="{{ g.get_absolute_url }}"><span class="badge badge-info">{{g.nome}}</span></a>
+                      {% empty %}
+                      ..Nessuna genere specificato..
+                      {% endfor %}
+                </p>
+              </div>
+                <div class="card-footer">
+                    <a class="btn btn-primary btn-sm" href="{{ l.autore.get_absolute_url }}" role="button">Dettagli Autore</a>
+                    <a class="btn btn-primary btn-sm" href="{{ l.get_absolute_url }}" role="button">Scheda</a>
+              </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+  </div>
+
+
+{% endblock content%}

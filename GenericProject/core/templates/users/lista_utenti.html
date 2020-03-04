@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_title %}{{ block.super }} | Lista Utenti{% endblock head_title %}
+
+{% block content%}
+
+
+<div class="row mt-3">
+    <div class="col-12">
+        <p class="h1 display-3">Lista Utenti CB</p>
+        <hr>
+            {% for user in object_list|dictsort:"username" %}
+
+                {% if forloop.first %}<div class="row">{% endif %}
+                    <div class="col-lg-4">
+                        <div class="card border-info my-1" >
+                          <div class="card-body py-1">
+                                <div class="row">
+                                    <div class="col-3 pt-1">
+                                        <div class="avatar-circle">
+                                            <span class="initials">{{ user.first_name|slice:"1" }}{{ user.last_name|slice:"1" }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-9">
+                                        <a href="{% url 'profilo_utente' username=user.username%}">
+                                            <h6 class="card-title text-info mb-1"><strong>@{{ user.username }}</strong></h6>
+                                        </a>
+                                        <p class="card-text mb-0 text-muted">
+                                            Attivo: {{ user.is_active }}<br>
+                                            Privilegi di:
+                                                {% if user.is_superuser %} Aministratore<br>
+                                                {% elif user.is_staff %} Staff<br>
+                                                {% else %} Utente<br>
+                                                {% endif %}
+                                            Iscritto da: {{user.date_joined|date:"D d M Y"}}<br>
+                                            {% if appForum.is_visible and appForum.is_enabled %}
+                                                Posts: {{user.posts.count}}<br>
+                                                Discussioni: {{user.discussioni.count}}
+                                            {% endif %}
+
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% if forloop.counter|divisibleby:"3" or forloop.last %}</div>{% endif %}
+                {% if forloop.counter|divisibleby:"3" and not forloop.last %}<div class="row">{% endif %}
+
+
+
+            {% empty %}
+            ..nessun utente trovato..
+            {% endfor %}
+
+    </div>
+</div>
+
+{% endblock content%}

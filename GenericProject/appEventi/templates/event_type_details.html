@@ -1,0 +1,20 @@
+{% extends 'event_base.html' %}
+
+{% block head_title %}{{ block.super }} |  {{ eventTypeDetails.name }}{% endblock head_title %}
+{% block content %}
+
+<H1>Benvenuti nella gestione Eventi</H1>
+<H2>Lista Tipologie di evento</H2>
+
+
+<h3>Tipologia: {{ eventTypeDetails.name }}</h3>(<em>{{ eventTypeDetails.longDesc }}</em>)
+<h5>Canale di Erogazione: {{ eventTypeDetails.trainingChannel.name }} - {{ eventTypeDetails.trainingChannel.shortDesc }}</h5>
+<h5></em>{{ eventTypeDetails.trainingChannel.longDesc }}</em></h5>
+<h5>Normativa: {{ eventTypeDetails.regulatory.name }} - {{ eventTypeDetails.regulatory.shortDesc }}</h5>
+<h5></em>{{ eventTypeDetails.eventRegulatoryList.longDesc }}</em></h5>
+<p style="color:red">
+TIPO ABILITATO: {{ eventTypeDetails.enabled }}<br>
+CANALE ABILITATO: {{ eventTypeDetails.trainingChannel.enabled }}<br>
+NORMATIVA ABILITATA: {{ eventTypeDetails.regulatory.enabled }}<br>
+</p>
+{% endblock content %}

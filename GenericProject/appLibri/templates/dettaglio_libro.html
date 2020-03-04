@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block head_title %}{{ block.super }} | {{libro}} Lista Generi{% endblock head_title %}
+
+{% block content%}
+
+<p class="h1 display-3">Scheda del Libro</p>
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+      Generi:
+        {% for g in libro.genere.all %}
+        <span class="badge badge-info">{{g.nome}}</span>
+        {% empty %}
+        ..Nessuna genere specificato..
+        {% endfor %}
+
+    <h1 class="display-4">{{ libro }}</h1>
+    <h1 class="display-6">{{ libro.autore }}</h1>
+    <p>{{libro.descrizione}}</p>
+    <p><b>Tipo Copertina: {{libro.tipoCopertina}}</p>
+
+    <hr>
+    <p class="lead">
+        <h6>{{ libro.autore }} (Nazione: {{ libro.autore.nazione }})</h6>
+        <h5 class="display-6">Le sue pubblicazioni:</h5>
+        <ul>
+        {% for l in libro.autore.libri.all %}
+        <li><a href="{{ l.get_absolute_url }}">{{ l.titolo }}</a></li>
+        {% empty %}
+        <li>..Nessuna Pubblicazione..</li>
+        {% endfor %}
+        </ul>
+    </p>
+    <a href="{{request.META.HTTP_REFERER}}">Go back</a>
+  </div>
+</div>
+
+{% endblock content%}

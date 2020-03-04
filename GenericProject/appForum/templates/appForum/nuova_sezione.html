@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block head_title %}{{ block.super }} | Nuova Sezione{% endblock head_title %}
+
+{% block content %}
+
+
+<div class="row mt-4">
+    <div class="col-12 list-unstyled">
+        <h2>Crea nuova Sezione</h2>
+        <h5>Crea una nuova sezione per il forum (funzinalità abilitata solo per gli utenti appartenenti allo staff!).</h5>
+
+        <form action="" enctype="multipart/form-data" method="POST" novalidate>
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" class="btn btn-info" value="Crea la sezione">
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

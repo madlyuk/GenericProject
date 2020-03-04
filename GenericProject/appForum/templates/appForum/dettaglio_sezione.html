@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_title %}{{ block.super }} | {{sezione}}{% endblock head_title %}
+
+{% block content%}
+
+
+    <div class="card my-3">
+      <div class="card-header">
+
+          <h3 class="card-title">{{sezione.logo_image_preview}} {{sezione}}</h3>
+          <p>{{sezione.descrizione}}</p>
+      </div>
+      <div class="card-body">
+        <table class="table mt-3 table-hover">
+            <thead>
+                <tr>
+                    <th class="col-lg-5 col-4" style="border-style: none none solid none;">Titolo</td>
+                    <th class="col-lg-2 col-3" style="border-style: none none solid none;">Autore</td>
+                    <th class="col-lg-2 col-2" style="border-style: none none solid none;">Posts</td>
+                    <th class="col-lg-3 col-3" style="border-style: none none solid none;">Ultimo</td>
+                </tr>
+            </thead>
+            <tbody>
+                {%for discussione in discussioni_sezione%}
+                    <tr>
+                        <td class="col-lg-6 col-4">
+                            <a href="{{discussione.get_absolute_url}}">{{discussione.titolo}}</a>
+                        </td>
+                        <td class="col-lg-2 col-3">
+                            <a href="{% url "profilo_utente" username=discussione.autore.username %}">{{discussione.autore.username}}</a>
+                        </td>
+                        <td class="col-lg-2 col-2">
+                            {{ discussione.get_num_of_posts_in_discussion }}
+                        </td>
+                        <td class="col-lg-2 col-3">
+                            <span class="discussione_autore_data">{{ discussione.get_last_post_in_discussion.data_creazione|timesince }}</span>
+                        </td>
+                    </tr>
+                {%empty%}
+                    <p>..nessuna discussione inserita..</p>
+                {%endfor%}
+            </tbody>
+        </table>
+      </div>
+        <div class="card-footer">
+            <a class="btn btn-primary btn-sm" href="{%url 'home_forum'%}" role="button">Torna alle Sessioni</a>
+            <a class="btn btn-secondary btn-sm btn-info" href="{%url 'nuova_discussione' pk=sezione.pk %}" role="button">Nuova Discussione</a>
+      </div>
+    </div>
+
+
+
+
+{% endblock content%}

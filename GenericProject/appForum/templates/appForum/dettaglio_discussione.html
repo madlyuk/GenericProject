@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_title %}{{ block.super }} | {{discussione}}{% endblock head_title %}
+
+{% block content%}
+
+
+
+
+{%for post in posts_discussione%}
+
+<div class="card my-3 mt-3">
+    {% if forloop.first and "pagina" not in request.get_full_path %}
+        <div class="card-header pb-0">
+            <h2>{{discussione}}</h2>
+            <h5>in: <a href="{{discussione.sezione.get_absolute_url}}">{{discussione.sezione}}</a></h5>
+            <h6 class="text-muted">{{discussione.data_creazione|date:"D d M Y"}}</h6>
+        </div>
+    {% else %}
+    <div class="card-header text-muted">
+        <div class="row">
+            <div class="col-11">
+                Inserito il: {{post.data_creazione|date:'d/m/Y - H:i'}}
+            </div>
+            <div class="col-1">
+                {% if request.user == post.autore %}
+                    <a href="{% url 'modifica_post' id=discussione.pk pk=post.pk%}"><i class="fas fa-edit" title="Modifica Post"></i></a>&nbsp;&nbsp;
+                    <a href="{% url 'cancella_post' id=discussione.pk pk=post.pk%}"><i class="fas fa-minus-circle" title="Cancella Post"></i></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif%}
+    <div class="card-body ">
+        <div class="row">
+            <div class="col-xl-2 col-3">
+                <p class="mb-0">
+                    <a href="{% url 'profilo_utente' username=post.autore.username %}">
+                    <div class="avatar-circle">
+                        <span class="initials">{{ post.autore.first_name|slice:"1" }}{{ post.autore.last_name|slice:"1" }}</span>
+                    </div>
+                    <strong>{{ post.autore }}</strong></a>
+                </p>
+                <p class="text-muted mb-0">Utente da: {{ post.autore.date_joined|date:"M Y" }}</p>
+                <p class="text-muted" >Posts: <a href="{% url 'posts_utente' username=post.autore.username %}">{{ post.autore.posts.count }}</a></p>
+            </div>
+            <div class="col-xl-10 col-9">
+                <p class="my-0">{{ post.contenuto|linebreaks }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{%endfor%}
+
+<div class="text-right">
+    <span class="step-links">
+        {% if posts_discussione.has_previous %}
+            <a href="?pagina=1">&laquo; prima</a>
+            <a href="?pagina={{ posts_discussione.previous_page_number }}">precedente</a>
+        {% endif %}
+
+        <span class="current">
+            Pagina {{ posts_discussione.number }} di {{ posts_discussione.paginator.num_pages }}.
+        </span>
+
+        {% if posts_discussione.has_next %}
+            <a href="?pagina={{ posts_discussione.next_page_number }}">successiva</a>
+            <a href="?pagina={{ posts_discussione.paginator.num_pages }}">ultima &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{% if request.user.is_authenticated %}
+    {% include 'appForum/nuovo_post.html'%}
+{% else %}
+<div class="alert alert-info" role="alert">Per partecipare alle discussioni devi effettuare il <a href="{% url 'login' %}?next={{ request.get_full_path }}">login</a></div>
+{% endif %}
+{% endblock content%}

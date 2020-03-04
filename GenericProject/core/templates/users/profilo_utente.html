@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_title %}{{ block.super }} | {{ user }}{% endblock head_title %}
+
+{% block content%}
+
+
+<div class="row mt-3">
+    <div class="col-12">
+        <p class="h1 display-3">Profilo utente</p>
+        <hr>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-4">
+        <div class="card my-2">
+            <div class="card-header">{% if request.user == user %}Il tuo {% endif %}Utente:</div>
+            <div class="card-body">
+                <div class="avatar-circle">
+                    <span class="initials">{{ user.first_name|slice:"1" }}{{ user.last_name|slice:"1" }}</span>
+                </div>
+                <p class="mb-0">Username: @{{ user }}</p>
+                <p class="mb-0">Nome completo: {{ user.first_name }} {{ user.last_name }}</p>
+                <p class="mb-0">Email: {{ user.email }}</p>
+                <p class="mb-0">Iscritto da: {{user.date_joined|date:"D d M Y"}}</p>
+                <p class="mb-0">Ultimo accesso: {{ user.last_login|date:"D d M Y - H:i" }}</p>
+                <hr>
+                <p class="mb-0">Attivo: {{ user.is_active }}</p>
+                <p class="mb-0">Privilegi di:
+                    {% if user.is_superuser %} Aministratore
+                    {% elif user.is_staff %} Staff
+                    {% else %} Utente
+                    {% endif %}
+                </p>
+                {% if permissions and request.user.is_superuser %}
+                <p class="mb-0">User Permission:
+                    <ul class="p-3 mt-0 bg-light" style="overflow:auto; height: 100px; max-height: 100px;">
+                    {% for permission in permissions%}
+                        <li><code>{{permission}}</code></li>
+                    {% endfor %}
+                    </ul>
+                </p>
+                {% endif %}
+                {% if posts_utente and appForum.is_visible and appForum.is_enabled %}
+                <hr>
+                <p class="mb-0">Discussioni: {{user.discussioni.count}}</p>
+                <p class="mb-0">Posts: {{user.posts.count}}</p>
+                {% endif %}
+            </div>
+            <div class="card-footer"></div>
+        </div>
+    </div>
+    <div class="col-8">
+        {% if posts_utente and appForum.is_visible and appForum.is_enabled %}
+        <div class="card my-2">
+            <div class="card-header">Discussioni:</div>
+            <!--Accordion wrapper-->
+            <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+            {% if posts_utente %}
+            {% regroup posts_utente by discussione as post_utente_by_discussione %}
+            {% for d in post_utente_by_discussione %}
+            <!-- Accordion card -->
+            <div class="card card-light">
+                <!-- Card header -->
+                {% if forloop.first %}
+                <div class="card-header card-header-light mt-3" style="border-radius:0px !important;" role="tab" id="headingOne{{ forloop.counter }}">
+                {% else %}
+                <div class="card-header card-header-light mt-0" role="tab" id="headingOne{{ forloop.counter }}">
+                {% endif %}
+                    <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne{{ forloop.counter }}" aria-expanded="true" aria-controls="collapseOne{{ forloop.counter }}">
+                    <h5 class="mb-0"> > {{ d.grouper }}
+                        <small class="float-sm-right">
+                            <a class="btn btn-sm btn-outline-info" href="{{ d.grouper.get_absolute_url }}">Visualizza</a>
+                        </small>
+                    </h5>
+                    </a>
+                    <p class="small-muted text-muted pb=0">{{ d.grouper.data_creazione|date:"d M Y" }} - {{ d.grouper.sezione }} - totale post: {{ d.list|length }}</p>
+                    {% if not forloop.last %}<hr class="pb=0">{% endif %}
+                </div>
+                <!-- Card body -->
+                <div id="collapseOne{{ forloop.counter }}" class="collapse" role="tabpanel" aria-labelledby="headingOne{{ forloop.counter }}"
+                data-parent="#accordionEx">
+                    <div class="card-body">
+                        <ul>
+                        {% for post in d.list %}
+                            <li>
+                                <small><p class="text-muted">Data: {{post.data_creazione|date:"d/m/Y - H:i"}}</p>
+                                <p>{{post.get_short_description|linebreaks}}</p></small>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Accordion card -->
+            {% endfor %}
+            {% endif %}
+
+            </div>
+            <!-- Accordion wrapper -->
+            <div class="card-footer">totale discussioni: {{user.discussioni.count}}</div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock content%}

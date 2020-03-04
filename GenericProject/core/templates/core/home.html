@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_title %}{{ block.super }} | Homepage{% endblock head_title %}
+
+{% block content%}
+
+<div class="container text-center">
+    <!-- SIMILE a JUMBOTRON (no sfondo pero') -->
+    <div class="row">
+        <div class="col-lg-10 offset-lg-1 mt-3">
+            <h1 class="display-4">Benvenuto in</h1>
+            <h1 class="display-4">GENERIC-PROJECT</h1>
+            <p class="lead">Questo è un progetto generico dove integrerò, durante il mio percorso formativo, nuove app completamente indipendenti al fine di poter essere riutilizzate</p>
+            <a class="btn btn-outline-info btn-sm" href="#" role="button">Informazioni</a>
+        </div>
+    </div>
+
+<br>
+
+    <div class="card-deck  text-center">
+        <div class="card-columns col-lg-12">
+        {% for app in appList %}
+        {% if app.is_visible %}
+          <div class="card">
+            <img src="{{ app.image }}" class="card-img-top" alt="Foto dell'app {{ app.title }}">
+            <div class="card-body d-flex flex-column" style="height: 10rem;">
+              <h5 class="card-title">{{ app.title }}</h5>
+              <p class="card-text">{{ app.desc }}</p>
+            </div>
+            <div class="card-footer  border-success border-top-0">
+                {% if app.is_enabled %}
+                <a href="{{ app.mainAppView }}" class="align-self-end btn btn-outline-info btn-sm active" style="margin-top: auto;" role="button">scopri</a>
+                {% else %}
+                <a class="btn btn-secondary btn-sm disabled" role="button" aria-disabled="true">Coming soon</a>
+                {% endif %}
+            </div>
+          </div>
+          {% endif %}
+          {% empty %}
+          <li>..Nessun App trovata..</li>
+          {% endfor %}
+        </div>
+    </div>
+
+    <!-- TESTO -->
+    <p class="mt-5 mb-0 pb-0" >Al momento tutte le immagini usate nel sito sono prese casualmente da web e non hanno una reale relazione con i contenuti, anch'essi usati a fini di test delle app. Di seguito alcuni tra i prossimi task di lavoro:</p>
+
+    <!-- CARD LIST GROUP-->
+    <div class="card-deck my-3 text-center">
+        <div class="card">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item text-white" style="background-color:#17a2b8"><strong>Gestione Corsi</strong></li>
+              <li class="list-group-item"><a class="text-dark" href="#">Collegamento dei corsi a Vimeo, GoToWebinar e altri servizi esterni</a></li>
+              <li class="list-group-item"><a class="text-dark" href="#">Conversione del gestore libri in un gestore documentale da collegare anche al modulo corsi</a></li>
+              <li class="list-group-item"><a class="text-dark" href="#">Integrazione Forum nell'area Corsi</a></li>
+              <li class="list-group-item"><a class="text-dark" href="#">Iscrizione ai corsi</a></li>
+              <li class="list-group-item"><a class="text-dark" href="#">Collegamento eCommerce (solo Paypal + bonifico)</a></li>
+            </ul>
+        </div>
+        <div class="card">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item text-white" style="background-color:#17a2b8"><strong>Docu Manager e CMS</strong></li>
+              <li class="list-group-item"><a class="text-dark" href="#">Creazione autonoma documenti</a></li>
+              <li class="list-group-item"><a class="text-dark" href="#">Sistema di condivisione documenti</a></li>
+              <li class="list-group-item"><a class="text-dark" href="#">Stampa</a></li>
+            </ul>
+        </div>
+        <div class="card">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item text-white" style="background-color:#17a2b8"><strong>Nuove App IA di esempio</strong></li>
+              <li class="list-group-item"><a class="text-dark" href="#">..da definire..</a></li>
+            </ul>
+        </div>
+        <div class="card">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item text-white" style="background-color:#17a2b8"><strong>Interventi architetturali</strong></li>
+                <li class="list-group-item"><a class="text-dark" href="#">Docker</a></li>
+                <li class="list-group-item"><a class="text-dark" href="#">JS</a></li>
+                <li class="list-group-item"><a class="text-dark" href="#">Mobile</a></li>
+                <li class="list-group-item"><a class="text-dark" href="#">MongoDB</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content%}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_title %}{{ block.super }} | Forum{% endblock head_title %}
+
+{% block content%}
+{% if appForum.is_visible and appForum.is_enabled %}
+<div class="row mt-3">
+    <div class="col-12">
+        {% if request.user.is_staff %}
+        <div class="card-body pr-0 pl-0 float-right" >
+            <a class="btn btn-sm btn-danger mb-10 " href="nuova_sezione">Crea nuova sezione</a>
+        </div>
+        {% endif %}
+        <p class="h1 display-3">Benvenuti nel Forum</p>
+        <h6>{{appForum.desc}}</h5>
+        <hr>
+
+
+        {% for sezione in lista_sezioni %}
+        <div class="card my-3">
+            <div class="card-header">
+                <h5><strong><a href="{{sezione.get_absolute_url}}">{{ sezione.titolo }}</a></strong></h5>
+                <p class="mb-0">{{ sezione.descrizione }}</p>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <img src="{{ sezione.logo.url }}" style="max-width:100%; max-width:128px;"  alt="immagine per la sezione {{ session.titolo }}">
+                        <p>
+                            Discussioni totali: {{ sezione.discussioni_sezione.all.count }}<br>
+                            <!--Discussioni totali: {{ sezione.discussione_set.count }}<br--> <!-- verificare perchè _set che dovrebbe creare automaticamente un related-name tra sezione e discussione, non funziona.. ho dovuto aggiungere a mano un related-name come nella riga sopra-->
+                            Messaggi totali: {{sezione.get_num_of_posts_in_section}}
+                        </p>
+                    </div>
+                    <div class="col-lg-9">
+                        <p>Ultime Discussioni: </p>
+                        <table class="table table-hover">
+                            <tbody>
+                                {% for discussione in sezione.get_last_discussions.all %}
+                                <tr class="row">
+                                    <td class="col-lg-7 col-6">
+                                        <a href="{% url "dettaglio_discussione" pk=discussione.pk %}">{{discussione.titolo}}</a>
+                                    </td>
+                                    <td class="col-lg-3 col-3">
+                                        <a href="{% url "profilo_utente" username=discussione.autore.username %}">{{discussione.autore}}</a>
+                                    </td>
+                                    <td class="col-lg-2 col-3">
+                                        Post: {{ discussione.get_num_of_posts_in_discussion }}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+            ..nessuna sessione trovata..
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<p>Il modulo forum non è attivo, rivolgersi all'amministratore.</p>
+{% endif %}
+{% endblock content%}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block head_title %}{{ block.super }} | Cancella Post{% endblock head_title %}
+
+{% block content %}
+    <div class="row justify-content-center mt-4">
+        <div class="col-12 text-center">
+                <p>Sei sicuro di voler cancellare il messaggio?</p>
+                <form method="POST" novalidate>
+                    {% csrf_token %}
+                    <input type="submit" class="btn btn-danger" value="Conferma">
+                </form>
+        </div>
+    </div>
+{% endblock %}

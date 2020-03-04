@@ -1,0 +1,30 @@
+{% extends 'event_base.html' %}
+
+{% block head_title %}{{ block.super }} | Lista Eventi {% endblock head_title %}
+{% block content %}
+
+<p class="h1 display-3">Catalogo Corsi</p>
+    <div class="card-deck">
+        {% for evt in eventList %}
+        <div class="card">
+          <div class="card-header">Tipologia: <a href="{{ evt.eventType.get_absolute_url }}">{{ evt.eventType.name }}</a></div>
+          <div class="card-body">
+            <h5 class="card-title">{{ evt.name }}</h5>
+            <p class="card-text">
+                    Erogazione: <em>{{ evt.eventType.trainingChannel.name }} - {{ evt.eventType.trainingChannel.shortDesc }}<br>
+                    Normativa: <em>{{ evt.eventType.regulatory.name }} - {{ evt.eventType.regulatory.shortDesc }}</em><br>
+                    <hr>
+                    Descrizione: {{ evt.longDesc }}
+            </p>
+          </div>
+            <div class="card-footer">
+                <p style="color:red">
+                    Visibile a Frontend: {{ evt.frontend_visible }} <br>
+                    Visibile a Backend: {{ evt.backend_visible }} <br>
+                    Corso Abilitato {{ evt.enabled }} <br>
+                </p>
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

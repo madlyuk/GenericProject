@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block head_title %}{{ block.super }} | {{ autore }}{% endblock head_title %}
+
+{% block content%}
+
+<p class="h1 display-3">Dettaglio Autori</p>
+
+
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">{{ autore }}</h1>
+    <p class="lead">
+        (Nazione: {{ autore.nazione }})
+        <h3 class="display-6">Le sue pubblicazioni:</h1>
+        <ul>
+        {% for l in autore.libri.all %}
+        <li><a href="{{ l.get_absolute_url }}">{{ l.titolo }}</a></li>
+        {% empty %}
+        <li>..Nessuna Pubblicazione..</li>
+        {% endfor %}
+        </ul>
+    </p>
+    <a href="{{request.META.HTTP_REFERER}}">Go back</a>
+  </div>
+</div>
+
+{% endblock content%}

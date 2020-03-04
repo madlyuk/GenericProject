@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block head_title %}{{ block.super }} | Lista Libri{% endblock head_title %}
+
+{% block content%}
+
+<p class="h1 display-3">Lista Libri</p>
+
+<hr>
+
+<p>Totale libri inseriti: {{libri.count}}</p>
+
+{% for l in libri %}
+        <div class="card">
+          <div class="card-header"><h4>{{ l }}</h4></div>
+          <div class="card-body">
+            <p class="card-text">
+                    <b>Autore:</b><a href="{{ l.autore.get_absolute_url }}">{{ l.autore }}</a> <br>
+                    <b>ISBN:</b> {{ l.isbn }}<br>
+                    <b>Genere:</b>
+                    {% for g in l.genere.all%}
+                    <a href="{{ g.get_absolute_url }}"><span class="badge badge-info">{{g.nome}}</span></a>
+                    {% empty %}
+                    ..Nessuna Pubblicazione..
+                    {% endfor%}<br>
+                    <b>Descrizione:</b> {{l.descrizione}}<br>
+            </p>
+          </div>
+        </div>
+{% endfor %}
+
+
+{% endblock content%}

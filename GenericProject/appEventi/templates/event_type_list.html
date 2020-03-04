@@ -1,0 +1,27 @@
+{% extends 'event_base.html' %}
+
+{% block head_title %}{{ block.super }} | Lista Tipologie Evento {% endblock head_title %}
+{% block content %}
+
+<H1>Benvenuti nella gestione Eventi</H1>
+<H2>Lista Tipologie di evento</H2>
+
+<ul>
+    {% for evtType in eventTypeList %}
+    <li>
+        <h3>Tipologia: {{ evtType.name }}</h3>(<em>{{ evtType.longDesc }}</em>)
+        <h5>Canale di Erogazione: {{ evtType.trainingChannel.name }} - {{ evtType.trainingChannel.shortDesc }}</h5>
+        <h5></em>{{ evtType.trainingChannel.longDesc }}</em></h5>
+        <h5>Normativa: {{ evtType.regulatory.name }} - {{ evtType.regulatory.shortDesc }}</h5>
+        <h5></em>{{ evtType.eventRegulatoryList.longDesc }}</em></h5>
+        <p style="color:red">
+        TIPO ABILITATO: {{ evtType.enabled }}<br>
+        CANALE ABILITATO: {{ evtType.trainingChannel.enabled }}<br>
+        NORMATIVA ABILITATA: {{ evtType.regulatory.enabled }}<br>
+        </p>
+    </li>
+    {% empty %}
+    <li>..Nessun record trovato..</li>
+    {% endfor %}
+</ul>
+{% endblock content %}

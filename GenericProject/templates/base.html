@@ -1,0 +1,81 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="it">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+        <script src="https://kit.fontawesome.com/1fd7355937.js" crossorigin="anonymous"></script>
+        <!--script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js"
+        integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script-->
+        <!--script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js"
+        integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script-->
+        <link href="https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Exo|Permanent+Marker&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/generic_project.css' %}">
+        <link rel="stylesheet" href="{% static 'css/core.css' %}">
+        <link rel="stylesheet" href="{% static 'css/forum.css' %}">
+        <link rel="stylesheet" href="{% static 'css/events.css' %}">
+        {% block extrahead %}{% endblock extrahead %}
+        <title>{% block head_title %}Generic Project{% endblock head_title %}</title>
+    </head>
+    <!-- PROVA 1 -->
+    <body>
+        <!-- NAV BAR -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+          <div class="container">
+              <a class="navbar-brand" href="/">GENERIC-PROJECT</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <form class="form-inline my-2 my-lg-0" action="{% url 'funzione_cerca' %}">
+                    <input name="q" class="form-control mr-sm-2" type="search" placeholder="Cosa stai cercando?" aria-label="Search">
+                    <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Cerca</button>
+                </form>
+
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="{% url 'lista_utenti' %}">Lista Utenti<span class="sr-only">(current)</span></a>
+                    </li>
+                    {% if request.user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ request.user.username }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'profilo_utente' username=request.user.username %}">Profilo</a>
+                            <a class="dropdown-item" href="{% url 'password_change' %}">Aggiorna Password</a>
+                        <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'logout' %}">Esci</a>
+                        </div>
+                    </li>
+                    {% else %}  <!--Controllare anche che AppAccessi sia nella lista di AppModuli e sia attiva -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'nuovo_utente' %}">Registrazione</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}?next={{ request.get_full_path }}">Login</a>
+                    </li>
+                    {% endif %}
+                  </ul>
+              </div>
+          </div>
+        </nav>
+        <div class="container">
+            {% block content %}
+
+            {% endblock content %}
+        </div>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+      </body>
+    </html>

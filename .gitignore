@@ -1,0 +1,12 @@
+*.pyc
+__pycache__
+v_env
+db.sqlite3
+/static
+/media-serve
+.DS_Store
+manage.py
+/configurazioni suggerite nel corso
+info-git.txt
+info-hosting.txt
+GenericProject.zip

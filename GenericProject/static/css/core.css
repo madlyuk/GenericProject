@@ -1,0 +1,31 @@
+.small-muted {
+    font-size: 0.8rem;
+    color: text-muted;
+}
+.card-header-light {
+  /*padding: $card-spacer-y $card-spacer-x;*/
+  margin-bottom: 0 !important;
+  background-color: #FFF !important;
+  border-bottom: 0 !important;
+  border:0 !important;
+  border-radius: 0 0 0 0 !important;
+}
+.card-light {
+  border-top-color: rgba(0, 0, 0, 0.125);
+    border-top-style: solid;
+    border-top-width: 0px;
+    border-right-color: rgba(0, 0, 0, 0.125);
+    border-right-style: solid;
+    border-right-width: 0px;
+    border-bottom-color: rgba(0, 0, 0, 0.125);
+    border-bottom-style: solid;
+    border-bottom-width: 0px;
+    border-left-color: rgba(0, 0, 0, 0.125);
+    border-left-style: solid;
+    border-left-width: 0px;
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+}

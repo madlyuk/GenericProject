@@ -1,0 +1,40 @@
+body {
+    font-family: 'Exo', sans-serif;
+}
+
+h1 {
+  font-family: 'Permanent Marker', cursive;
+}
+h2 {
+  font-family: 'Exo', sans-serif;
+}
+a, a:hover{
+    color: #17a2b8;
+}
+p:{
+    font-family: 'Exo', sans-serif;
+}
+
+.card-text:last-child {
+    font-size: small;
+}
+
+.avatar-circle {
+  width: 64px;
+  height: 64px;
+  background-color: #17a2b8;
+  text-align: center;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+}
+
+span.initials {
+  position: relative;
+  top: 16px; /* 25% of parent */
+  font-size: 32px; /* 50% of parent */
+  line-height: 32px; /* 50% of parent */
+  color: #fff;
+  font-family: "Courier New", monospace;
+  font-weight: bold;
+}

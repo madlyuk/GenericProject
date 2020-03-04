@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_title %}{{ block.super }} | {{discussione}}{% endblock head_title %}
+
+{% block content%}
+<a href="{% url 'profilo_utente' username=utente.username %}"><strong>{{ utente.username }}</strong></a>
+<p class="text-muted mb-0">Utente da: {{ utente.date_joined|date:"M Y" }}</p>
+<p class="text-muted" >Posts: {{ utente.posts.count }}</p>
+
+{% regroup posts_utente by discussione as post_utente_by_discussione %}
+    {%for d in post_utente_by_discussione%}
+        <h3>Discussione: {{ d.grouper }}</h3>
+        {% for post in d.list %}
+        <div class="card my-3">
+            <div class="card-header text-muted">Inserito il: {{post.data_creazione|date:'d/m/Y - H:i'}}</div>
+            <div class="card-body">
+                <p class="my-0">{{ post.contenuto|linebreaks }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    {% endfor %}
+    
+{% endblock content%}

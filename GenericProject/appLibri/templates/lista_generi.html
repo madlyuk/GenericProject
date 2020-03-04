@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block head_title %}{{ block.super }} | Lista Generi{% endblock head_title %}
+
+{% block content%}
+
+<div class="row">
+    <div class="col-12 text-center">
+        <p class="h1 display-3">Lista Generi</p>
+        <hr>
+    </div>
+    <div class="col-2">
+        <div class="btn-group-vertical">
+            <a href="{% url 'catalogo_libri' %}" class="{% if request.resolver_match.url_name == 'catalogo_libri' %}btn btn-primary btn-lg active{% else %} btn btn-secondary btn-lg  {% endif %}" role="button" aria-pressed="true">Libri</a>
+            <a href="{% url 'lista_autori' %}" class="{% if request.resolver_match.url_name == 'lista_autori' %}btn btn-primary btn-lg active{% else %} btn btn-secondary btn-lg  {% endif %}" role="button" aria-pressed="true">Autori</a>
+            <a href="{% url 'lista_generi' %}" class="{% if request.resolver_match.url_name == 'lista_generi' %}btn btn-primary btn-lg active{% else %} btn btn-secondary btn-lg  {% endif %}" role="button" aria-pressed="true">Generi</a>
+        </div>
+    </div>
+    <div class="col-10">
+        <ul>
+        {% for g in generi %}
+            <li>
+                <a href="{{ g.get_absolute_url }}">{{ g }}</a>
+            </li>
+        {% empty %}
+        Nessun genere presente
+        {% endfor %}
+
+        </ul>
+    </div>
+</div>
+
+{% endblock content%}

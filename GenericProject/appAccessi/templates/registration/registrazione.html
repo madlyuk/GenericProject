@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block head_title %}{{ block.super }} | Registrazione{% endblock head_title %}
+
+{% block content %}
+
+
+
+<div class="row justify-content-center mt-4">
+    <div class="col-12 list-unstyled">
+        <h2>Registrati al sito</h2>
+        <h5>per ottenere completo accesso alle diverse App</h5>
+        <form action="" method="POST" novalidate>
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" class="btn btn-info" value="REGISTRATI">
+        </form>
+    </div>
+</div>
+
+{% endblock content %}
