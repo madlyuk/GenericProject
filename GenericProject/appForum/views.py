@@ -80,7 +80,7 @@ def CreaDiscussioneView(request,pk):
 def DettagliDiscussioneView(request,pk):
     discussione = get_object_or_404(Discussione, pk=pk)
     posts_discussione = Post.objects.filter(discussione=discussione)
-    paginator = Paginator(posts_discussione,5)
+    paginator = Paginator(posts_discussione,discussione.get_post_per_page())
     page = request.GET.get("pagina")
     posts = paginator.get_page(page)
 

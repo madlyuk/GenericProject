@@ -53,23 +53,45 @@
 </div>
 {%endfor%}
 
-<div class="text-right">
-    <span class="step-links">
-        {% if posts_discussione.has_previous %}
-            <a href="?pagina=1">&laquo; prima</a>
-            <a href="?pagina={{ posts_discussione.previous_page_number }}">precedente</a>
-        {% endif %}
 
-        <span class="current">
-            Pagina {{ posts_discussione.number }} di {{ posts_discussione.paginator.num_pages }}.
-        </span>
+<span class="text-info"></span>
+<nav aria-label="Page navigation">
+  <ul class="pagination justify-content-end">
+    {% if posts_discussione.has_previous %}
+        <li class="page-item">
+          <a class="page-link text-info" href="?pagina=1" tabindex="-1"><<</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link text-info" href="?pagina={{ posts_discussione.previous_page_number }}" tabindex="-1"><</a>
+        </li>
+    {% endif %}
 
-        {% if posts_discussione.has_next %}
-            <a href="?pagina={{ posts_discussione.next_page_number }}">successiva</a>
-            <a href="?pagina={{ posts_discussione.paginator.num_pages }}">ultima &raquo;</a>
+    {% for i in discussione.get_num_pages_list %}
+        {% if i != posts_discussione.number %}
+            <li class="page-item disable">
+                <a class="page-link text-info" href="?pagina={{ i }}">{{ i }}</a>
+            </li>
+        {% else %}
+            <li class="page-item active">
+                <a class="page-link bg-info border-info">Pag. {{ posts_discussione.number }} di {{ posts_discussione.paginator.num_pages }}.</a>
+            </li>
         {% endif %}
-    </span>
-</div>
+    {% endfor %}
+
+    {% if posts_discussione.has_next %}
+        <li class="page-item">
+          <a class="page-link text-info" href="?pagina={{ posts_discussione.next_page_number }}">></a>
+        </li>
+        <li class="page-item">
+          <a class="page-link text-info" href="?pagina={{ posts_discussione.paginator.num_pages }}">>></a>
+        </li>
+    {% endif %}
+
+  </ul>
+</nav>
+
+<hr>
+
 
 {% if request.user.is_authenticated %}
     {% include 'appForum/nuovo_post.html'%}

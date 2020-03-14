@@ -65,11 +65,18 @@ class Discussione(models.Model):
     def get_last_post_in_discussion(self):
         return Post.objects.filter(discussione = self).last()
 
+    def get_post_per_page(self):
+        return 5
+
     def get_num_pages(self):
         #num_posts = self.post_set.count()
         num_posts = self.get_num_of_posts_in_discussion()
-        num_pages = ceil(num_posts/5)
+        num_pages = ceil(num_posts/self.get_post_per_page())
         return num_pages
+
+    def get_num_pages_list(self):
+        return range(1,self.get_num_pages()+1)
+
 
     class Meta:
         verbose_name="Discussione"
