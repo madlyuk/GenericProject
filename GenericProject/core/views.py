@@ -4,6 +4,7 @@ from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User, Permission
 from appForum.models import Post, Discussione
+from products.models import Product, Manufacturer
 from appModuli.models import AppModuli
 from django.db.models import Q
 
@@ -53,16 +54,30 @@ def cerca(request):
         querystring = request.GET.get("q")
         if len(querystring) == 0:
             return redirect("/cerca/")
+        
+        #Cerca tra gli utenti
         appUtenti = AppModuli.objects.get(title="Autenticazione")
-        appForum = AppModuli.objects.get(title="Forum")
         users = User.objects.filter(
             Q(username__icontains = querystring) |
             Q(last_name__icontains = querystring) |
             Q(first_name__icontains = querystring)
         )
+        context = {"users":users, "appUtenti":appUtenti}
+
+        #Cerca nel Forum
+        appForum = AppModuli.objects.get(title="Forum")
         discussioni = Discussione.objects.filter(titolo__icontains = querystring)
         contenuto_posts = Post.objects.filter(contenuto__icontains = querystring)
-        context = {"discussioni":discussioni, "contenuto_posts":contenuto_posts, "users":users, "appForum": appForum, "appUtenti":appUtenti}
+        context.update({"discussioni":discussioni, "contenuto_posts":contenuto_posts, "appForum": appForum})
+
+        #Cerca Tra i prodotti
+        appProducts = AppModuli.objects.get(title="Catalogo Prodotti")
+        products = Product.objects.filter(Q(name__icontains = querystring) |
+                                          Q(description__icontains = querystring)
+                                        )
+        manufacturer = Manufacturer.objects.filter(name__icontains = querystring)
+        context.update({"products":products, "manufacturer":manufacturer, "appProducts":appProducts})
+
         return render(request, "core/cerca.html", context)
     else:
         return render(request, "core/cerca.html")

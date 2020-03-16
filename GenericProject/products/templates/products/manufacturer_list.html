@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_title %}{{ block.super }} | Manufacturer list {% endblock head_title %}
+
+{% block content%}
+
+        <h1>Lista dprodottori:</h1>
+        <br>
+        <a href="{% url 'product_list' %}" class="btn btn-sm btn-info">Vai alla lista prodotti</a>
+        <hr>
+
+        {% for manufacturer in object_list %}
+            <ul>
+                <li><a href="{{ manufacturer.get_absolute_url }}">{{manufacturer.name}}</a></li>
+            </ul>
+        {% endfor %}
+        
+{% endblock content%}

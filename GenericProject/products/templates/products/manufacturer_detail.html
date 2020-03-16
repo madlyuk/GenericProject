@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_title %}{{ block.super }} | {{ object.name }} {% endblock head_title %}
+
+{% block content%}
+                
+        <div class="card m-3">
+            <div class="card-header-light p-3"><h2>Produttore: {{ object.name }}</h2></div>
+            <div class="card-body">
+                <p class="card-text">Località {{ object.location }}</p>
+                {% if object.active %}
+                    <p class="card-text text-success">Attivo</p>
+                {% else %}
+                    <p class="card-text text-danger">Non Attivo</p>
+                {% endif %}
+                <hr>
+                <p class="card-text">I prodotti di {{ object.name }}</p>
+                {% for product in object.products.all %}
+                <ul>
+                    <li>
+                        <a href="{{product.get_absolute_url}}">{{product.name}}</a>
+                    </li>
+                </ul>
+                {% endfor %}
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'manufacturer_list' %}" class="btn btn-sm btn-info">Torna alla lista Produttori</a>
+            </div>
+                           
+        </div>
+
+        
+{% endblock content%}

@@ -15,13 +15,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-#Django non permette, in sviluppo (debug), un accesso diretto alle immagini caricate.
-#Per acedere tramite MEDIA_URL, doviamo mapparlo (2) nel file urls.py di progetto
-#faccendo riferimento a MEDIA_ROOT e MEDIA_URL definiti nel file di settings (1)
-#per questo motivo dobbiamo importare le seguenti librerie
-from django.conf import settings #(1)
-from django.conf.urls.static import static #(2)
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,8 +25,16 @@ urlpatterns = [
     path('app/', include('appModuli.urls')),
     path('contatti/', include('appContatti.urls')),
     path('accounts/', include('appAccessi.urls')),
-    path('forum/', include('appForum.urls'))
+    path('forum/', include('appForum.urls')),
+    path('prodotti/', include('products.urls'))
 ]
+
+#Django non permette, in sviluppo (debug), un accesso diretto alle immagini caricate.
+#Per acedere tramite MEDIA_URL, dobbiamo mapparlo (2) nel file urls.py di progetto
+#faccendo riferimento a MEDIA_ROOT e MEDIA_URL definiti nel file di settings (1)
+#per questo motivo dobbiamo importare le seguenti librerie
+from django.conf import settings #(1)
+from django.conf.urls.static import static #(2)
 
 #questa modifica per accedere ai media-file in fase di sviluppo è descritta nei commenti del metodo "static" (qui sotto). Si puo' accedere alla definizione tramite CMD+ALT+g
 if settings.DEBUG:

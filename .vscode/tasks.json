@@ -1,0 +1,29 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "attiva_ambiente_virtuale",
+            "type": "shell",
+            "command": "source v_env/bin/activate"
+        },
+        {
+            "label": "entra_nel_progetto",
+            "type": "shell",
+            "command": "cd GenericProject"
+        },
+        {
+            "label": "avvia_server_locale",
+            "type": "shell",
+            "command": "python3 manage.py runserver"
+        },
+        {
+            "label": "kill_process_sulla_porta_8080",
+            "type": "shell",
+            "command": "sudo lsof -t -i tcp:8000 | xargs kill -9"
+        }
+        
+
+    ]
+}
