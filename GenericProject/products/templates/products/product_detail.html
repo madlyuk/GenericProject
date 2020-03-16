@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_title %}{{ block.super }} | roduct list {% endblock head_title %}
+
+{% block content%}
+                
+        <div class="card m-3">
+            <div class="card-header-light p-3"><h2>Articolo: {{ object.name }}</h2></div>
+            <img src="{{ product.photo.url }}" class="card-img-top max-he" style="max-width: 200px;" alt="immagine dell'articolo {{ product.name }}">
+            <div class="card-body">
+                <p class="card-text">Prezzo: {{ object.description }}€</p>
+                <p class="card-text">Prezzo: {{ object.price }}€</p>
+                <p class="card-text">Spedizione: {{ object.shipping_cost }}</p>
+                {% if object.quantity > 0 %}
+                    <p class="card-text text-success">Disponibile</p>
+                {% else %}
+                    <p class="card-text text-danger">Esaurito</p>
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'product_list' %}" class="btn btn-sm btn-info">Torna alla lista prodotti</a>
+                <a href="{% url 'manufacturer_list' %}" class="btn btn-sm btn-info">Torna alla lista produttori</a>
+            </div>
+                
+            
+        </div>
+
+
+        
+        
+{% endblock content%}

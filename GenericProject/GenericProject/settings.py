@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'appNews',
     'appContatti',
     'appAccessi',
+    'products',
 
 
     # Django Core Apps
@@ -89,7 +90,9 @@ TEMPLATES = [
                  os.path.join(BASE_DIR, 'appAccessi/templates'),
                  os.path.join(BASE_DIR, 'appLibri/templates'),
                  os.path.join(BASE_DIR, 'appAccessi/templates'),
-                 os.path.join(BASE_DIR, 'appForum/templates')],
+                 os.path.join(BASE_DIR, 'appForum/templates'),
+                 os.path.join(BASE_DIR, 'products/templates')
+                 ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

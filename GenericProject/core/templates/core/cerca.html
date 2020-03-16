@@ -12,69 +12,117 @@
     </div>
 </div>
 <p>{{app_attive}}</p>
-<div class="row">
-    <div class="col-3">
-        {% if appUtenti.is_visible and appUtenti.is_enabled %}
-            <div class="card">
-                <div class="card-header pb-0">
-                    <h3>Utenti</h3>
+
+    <!-- Blocco User -->
+    <div class="row mb-3">
+        <div class="col-12 pl-0">
+            {% if appUtenti.is_visible and appUtenti.is_enabled %}
+                <div class="card">
+                    <div class="card-header pb-0">
+                        <h3>Utenti</h3>
+                    </div>
+                    <div class="card-body">
+                        {% if users %}
+                            <h5><strong>Lista Username</strong></h5>
+                            <hr>
+                            {% for user in users %}
+                                <p><a href="{% url 'profilo_utente' username=user.username %}">@{{user.username}}</a></p>
+                            {% endfor %}
+                        {% else %}
+                            <p>..nessun utente trovato..</p>
+                        {% endif %}
+                    </div>
                 </div>
-                <div class="card-body">
-                    {% if users %}
-                        <h5><strong>Lista Username</strong></h5>
-                        <hr>
-                        {% for user in users %}
-                            <p><a href="{% url 'profilo_utente' username=user.username %}">@{{user.username}}</a></p>
-                        {% endfor %}
-                    {% else %}
-                        <p>..nessun utente trovato..</p>
-                    {% endif %}
-                </div>
-            </div>
-        {% endif %}
+            {% endif %}
+        </div>
     </div>
-    <div class="col-9 pl-0">
-        {% if appForum.is_visible and appForum.is_enabled %}
-            <div class="card">
-                <div class="card-header pb-0">
-                    <h3>Forum</h3>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-5">
-                            {% if discussioni %}
-                                <h5><strong>Discussioni</strong></h5>
-                                <hr>
-                                {% for discussione in discussioni %}
-                                    <p><a href="{{discussione.get_absolute_url}}">• {{discussione.titolo}}</a></p>
-                                {% endfor %}
-                            {% else %}
-                                <p>..nessuna discussione trovata..</p>
-                            {% endif %}
-                        </div>
-                        <div class="col-7">
-                            {% if contenuto_posts %}
-                                <h5><strong>Posts</strong></h5>
-                                <hr>
-                                {% for post in contenuto_posts %}
-                                    <div class="mb-2" style="background:#F5F5F5">
-                                        <p class="mb-0"><i>{{post.contenuto|truncatewords:"10"}}</i></p>
-                                        <span class="text-muted mt-0">
-                                            di: <a href="{% url 'profilo_utente' username=post.autore.username %}">@{{post.autore.username}}</a><br>
-                                            in: <a href="{{post.discussione.get_absolute_url}}">{{post.discussione.titolo}}</a>
-                                        </span>
-                                    </div>
-                                {% endfor %}
-                            {% else %}
-                            <p>..nessun contenuto trovato..</p>
-                            {% endif %}
+    <!-- Blocco Forum -->
+    <div class="row mb-3">
+        <div class="col-12 pl-0">
+            {% if appForum.is_visible and appForum.is_enabled %}
+                <div class="card">
+                    <div class="card-header pb-0">
+                        <h3>Forum</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-5">
+                                {% if discussioni %}
+                                    <h5><strong>Discussioni</strong></h5>
+                                    <hr>
+                                    {% for discussione in discussioni %}
+                                        <p><a href="{{discussione.get_absolute_url}}">• {{discussione.titolo}}</a></p>
+                                    {% endfor %}
+                                {% else %}
+                                    <p>..nessuna discussione trovata..</p>
+                                {% endif %}
+                            </div>
+                            <div class="col-7">
+                                {% if contenuto_posts %}
+                                    <h5><strong>Posts</strong></h5>
+                                    <hr>
+                                    {% for post in contenuto_posts %}
+                                        <div class="mb-2" style="background:#F5F5F5">
+                                            <p class="mb-0"><i>{{post.contenuto|truncatewords:"10"}}</i></p>
+                                            <span class="text-muted mt-0">
+                                                di: <a href="{% url 'profilo_utente' username=post.autore.username %}">@{{post.autore.username}}</a><br>
+                                                in: <a href="{{post.discussione.get_absolute_url}}">{{post.discussione.titolo}}</a>
+                                            </span>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                <p>..nessun contenuto trovato..</p>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        {% endif %}
+            {% endif %}
+        </div>
     </div>
-
+    <!-- Blocco Prodotti -->
+    <div class="row mb-3">
+        <div class="col-12 pl-0">
+            {% if appProducts.is_visible and appProducts.is_enabled %}
+                <div class="card">
+                    <div class="card-header pb-0">
+                        <h3>Prodotti</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-5">
+                                {% if manufacturer %}
+                                    <h5><strong>Produttori</strong></h5>
+                                    <hr>
+                                    {% for produttori in manufacturer %}
+                                        <p><a href="{{produttori.get_absolute_url}}">• {{produttori.name}}</a></p>
+                                    {% endfor %}
+                                {% else %}
+                                    <p>..nessun produttore trovato..</p>
+                                {% endif %}
+                            </div>
+                            <div class="col-7">
+                                {% if products %}
+                                    <h5><strong>Prodotti</strong></h5>
+                                    <hr>
+                                    {% for prodotto in products %}
+                                        <div class="mb-2" style="background:#F5F5F5">
+                                            <p class="mb-0"><i>Articolo: <a href="{{prodotto.get_absolute_url}}">{{prodotto.name}}</a></i></p>
+                                            <span class="text-muted mt-0">
+                                                Descrizione: {{prodotto.description|truncatewords:"10"}}}
+                                            </span>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                <p>..nessun Prodotto trovato..</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 </div>
 
 
