@@ -4,7 +4,7 @@
 {% block head_title %}{{ block.super }} | {{ object.name }} {% endblock head_title %}
 
 {% block content%}
-                
+        
         <div class="card m-3">
             <div class="card-header-light p-3"><h2>Produttore: {{ object.name }}</h2></div>
             <div class="card-body">
@@ -26,6 +26,7 @@
             </div>
             <div class="card-footer">
                 <a href="{% url 'manufacturer_list' %}" class="btn btn-sm btn-info">Torna alla lista Produttori</a>
+                <a href="{% url 'manufacturer_detail_api_v1' pk=object.pk %}" class="btn btn-sm btn-outline-warning">API v.1</a>
             </div>
                            
         </div>

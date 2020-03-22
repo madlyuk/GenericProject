@@ -8,6 +8,7 @@
         <h1>Lista dprodottori:</h1>
         <br>
         <a href="{% url 'product_list' %}" class="btn btn-sm btn-info">Vai alla lista prodotti</a>
+        <a href="{% url 'manufacturer_list_api_v1' %}" class="btn btn-sm btn-outline-warning">API v.1</a>
         <hr>
 
         {% for manufacturer in object_list %}
